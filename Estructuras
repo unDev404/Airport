@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <chrono>// Fue la libreria que averigue para la simulacion de vuelo
+
+using namespace std;
+
+// Constantes globales 
+const bool ocupada = true; // Para indicar que la pista esta ocupada
+const bool libre = false; // Para indicar que la pista esta libre
+// Estructuras 
+
+enum estado { programado, enespera, enpista, finalizado }; // Para indicar el estado del vuelo
+
+struct vuelo {
+    string codigovuelo;
+    string origen;
+    string destino;
+    int horaSalida;
+    int horaLlegada;
+    int dia;
+    int prioridad;// Coloque prioridad para el ordenamiento de los vuelos, siendo 1 la mas alta y 3 la mas baja
+    int tipo ; // Aterrizaje o Despegue, indicara que tipo de operacion es el vuelo
+    estado estado;
+};
+
+struct nodohash {
+    vuelo* vuelo;
+    nodohash* siguiente;
+};
+
+struct pista {
+    int numpista; // Se coloca el numero de la pista para identificarla
+    bool estadopista; // Indica si la pista esta ocupada o no
+    vuelo* avionactual; // Apunta al vuelo que esta usando la pista
+};
