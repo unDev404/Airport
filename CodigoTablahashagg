@@ -85,7 +85,7 @@ int selecArray(int tam)
     {
         cout << "\nIngresa tu eleccion: ";
         cin >> x;
-        if(x>0 && x<tam) verify = false;
+        if(x>0 && x<=tam) verify = false;
         else cout << "\nOpcion Invalida, Intente nuevamente" << endl;
 
     }while(verify);
@@ -140,13 +140,6 @@ int main()
 
     string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
     string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
-
-    mostrarArray(ciudades, 4);
-    int selection = selecArray(4);
-   
-
-    cout << selection+1 << ". " << ciudades[selection] << endl;
-    
 
     return 0;
 }
