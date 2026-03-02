@@ -2,22 +2,17 @@
 
 using namespace std;
 
-struct aerolinea //ciudades con aeropuerto, para los destinos 
-{
-    string nombre;
-    string codigo;
-};
 
-
+enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
 
 
 struct vuelos
 {
-    struct aerolinea; //nombre de la empresa a la que pertenece el avión ARRAY STRING
+    string aerolinea; //nombre de la empresa a la que pertenece el avión ARRAY STRING
     string ID; //código único de identificación Ej: AN023 (CLAVE PARA HASH)
     string origen; //ciudad de la que viene el vuelo ARRAY STRING
     string destino; //ciudad a la que se dirige el vuelo
-    string prioridad; //preferencia jerarquica del vuelo {Comercial, VIP, Emergencia, Reprogramado, Cancelado}
+    clase prioridad; //preferencia jerarquica del vuelo {Comercial, VIP, Emergencia, Reprogramado, Cancelado}
     int horaProgramada; //Hora en la que debería estar en la pista del aeropuerto
     int estado; //desarrollo del vuelo: 0: PROGRAMADO, 1:  EN_PISTA, 2: FINALIZADO
     bool operación; //false = DESPEGUE, true = ATERRIZAJE
