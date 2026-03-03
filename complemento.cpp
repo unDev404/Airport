@@ -3,10 +3,19 @@
 
 using namespace std;
 
+enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
+enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
+enum dias {LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO}; // 0 (Lunes) a 6 (Domingo)
 
 int contadorVuelos = 0;
 string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
-string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
+string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //ciudades disponibles disponibles en el aeropuerto
+
+ //Traductor del enum a text
+string clases[5] = {"EMERGENCIA", "VIP", "COMERCIAL", "REPROGRAMADO", "CANCELADO"};
+string procesoactual[3] = {"PROGRAMADO", "EN_PISTA", "FINALIZADO"};
+string diasSemana[7] = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"}; //días de la semana para el historial
+
 void mostrarArray(string opciones[], int tam)
 {
 for(int i = 0; i < tam; i++)
@@ -103,4 +112,5 @@ void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo){
     insertarEnArBin(raiz, vueloNuevo);
     insertarHash(vueloNuevo);
     
+
 }
