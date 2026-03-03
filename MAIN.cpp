@@ -1,181 +1,70 @@
 #include<iostream>
 #include<string>
+#include "arbol.h"
+#include "hash.h"
+#include "vuelos.h"
+#include "complemento.h"
+#include "cola.h"
 
 using namespace std;
-
-int contadorVuelos = 0;
-enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
-enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
-
-    string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
-    string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
-
-struct vuelos
-{
-    string aerolinea; //nombre de la empresa a la que pertenece el avión ARRAY STRING
-    string ID; //código único de identificación Ej: AN123 (CLAVE PARA HASH)
-    string origen; //ciudad de la que viene el vuelo ARRAY STRING
-    string destino; //ciudad a la que se dirige el vuelo
-    clase prioridad; //preferencia jerarquica del vuelo 
-    proceso estado; //desarrollo del vuelo
-    int horaProgramada; //Hora en la que debería estar en la pista del aeropuerto
-    bool operacion; //false = DESPEGUE, true = ATERRIZAJE
-    //int día[7]; //Día en que el avión está en la pista, cola circular (de momento)
-};
-
-
-
-void mostrarArray(string opciones[], int tam)
-{
-for(int i = 0; i < tam; i++)
-{
-    cout<< i+1 << ". " << opciones[i]<< endl;
-}
-}
-
-
-string crearID(int num)
-{
-    string codeAir[5] = {"CV", "RT", "AV", "LS", "KY"};
-    string digits = to_string(contadorVuelos);
-    string cero = "";
-    int x = (3 - digits.length());
-    for(int i = 0; i<x; i++)
-    {
-        cero = cero + "0"; 
-    }
-    
-    string code = codeAir[num] + cero + to_string(contadorVuelos);
-    contadorVuelos++;
-    return code;
-}
-
-struct nodohash {
-    vuelos dato;
-    nodohash* siguiente;
-};
-
-//Definiciones globales para la tabla hash
- const int tamanoHash = 100;
-nodohash* tablaHash[100]={NULL};
-
-// Tabla Hash
-
-int funcionhash (string ID)
-{
-    int suma = 0;
-    int x = ID.length();
-    for (int i = 0; i < x; i++) {
-        suma += (int)ID[i]; // Suma el valor ASCII de cada carácter
-    }
-    return suma % tamanoHash; // Devuelve el índice en la tabla hash
-}
-
-vuelos* buscarvuelohash(string IDbuscar)
-{
-    int indice = funcionhash(IDbuscar);
-    nodohash* temp = tablaHash[indice];
-    while (temp != NULL) {
-        if (temp->dato.ID == IDbuscar) {
-            return &(temp->dato); // Devuelve un puntero al vuelo encontrado
-        temp = temp->siguiente;
-
-        }
-    }
-    return NULL; // No se encontró el vuelo
-}
-
-void insertarvuelo(vuelos vueloNuevo){
-    if(buscarvuelohash(vueloNuevo.ID) != NULL) {
-        cout << "Error: Ya existe un vuelo con ese ID." << endl;
-        return;
-    }
-    int indice = funcionhash(vueloNuevo.ID);
-    nodohash* nuevoNodo = new nodohash();
-    nuevoNodo->dato = vueloNuevo;
-    nuevoNodo->siguiente = tablaHash[indice];
-    tablaHash[indice] = nuevoNodo; // Inserta el nuevo nodo al inicio de la lista en ese índice
-    cout<<"registro en posicion:"<<indice<<endl;
-}
-
-int selecArray(int tam)
-{
-    int x = 0;
-    bool verify = true;
-    do
-    {
-        cout << "\nIngresa tu eleccion: ";
-        cin >> x;
-        if(x>0 && x<tam) verify = false;
-        else cout << "\nOpcion Invalida, Intente nuevamente" << endl;
-
-    }while(verify);
-   
-    return x-1;
-}
-
-void crearVuelo(vuelos vueloNuevo){
-    cout<<"--Registro de vuelo--"<<endl;
-    int op;
-    do{
-    cout<<"Tipo de operación: "<<endl;
-    cout<<"0. DESPEGUE\t1. ATERRIZAJE"<<endl;
-    cout<<"Seleccione:";
-    cin>>op;
-
-    if(op!=0 && op!=1)
-        cout<<"Opcion invalida"<<endl;
-    } while(op!=0 && op!=1);
-
-    vueloNuevo.operacion = (op == 1); // true para aterrizaje, false para despegue
-
-    cout<<"Seleccione la aerolínea de vuelo: "<<endl;
-    mostrarArray(aerolineas, 5);
-    int selection = selecArray(5);
-    vueloNuevo.aerolinea = aerolineas[selection];
-    vueloNuevo.ID = crearID(selection);
-
-    if(vueloNuevo.operacion)
-    {
-    cout<<"Seleccione la ciudad de origen: "<<endl;
-    mostrarArray(ciudades, 4);
-    int seleccionorigen = selecArray(4);
-    vueloNuevo.origen = ciudades[seleccionorigen];
-
-    vueloNuevo.destino = ciudades[0];
-    }else
-    {   
-    vueloNuevo.origen = ciudades[0];
-
-    cout<<"Seleccione la ciudad de destino: "<<endl;
-    mostrarArray(ciudades, 4);
-    int selecciondestino = selecArray(4);
-    vueloNuevo.destino = ciudades[selecciondestino];
-    }
-
-
-    vueloNuevo.estado = PROGRAMADO;
-    
-    do
-    {
-        cout<<"Ingrese la hora programada (en formato 24 horas, ej: 14 para 2pm): ";
-        cin>>vueloNuevo.horaProgramada;
-        if(!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24))
-        cout<<"Opcion invalida"<<endl;
-    } while (!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24));
-    
-}
-
+  
 
 int main()
 {
+ int opcion;
+    string idAux;
+    vuelos temp; 
 
-    vuelos vueloNuevo;
-    crearVuelo(vueloNuevo);
-    insertarvuelo(vueloNuevo);
+    do {
+        cout << "\n======================================" << endl;
+        cout << "   SISTEMA DE CONTROL DE AEROPUERTO" << endl;
+        cout << "======================================" << endl;
+        cout << "1. Registrar Vuelo (Entrada al sistema)" << endl;
+        cout << "2. Autorizar Pista (Mover a la fila)" << endl;
+        cout << "3. Atender Siguiente (Despegar/Aterrizar)" << endl;
+        cout << "4. Ver Radar de Pistas (Estado actual)" << endl;
+        cout << "5. Mostrar Vuelos en Sistema" << endl;
+        cout << "6. Mostrar Vuelos por Dia" << endl;
+        cout << "0. Salir del programa" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
 
-
-    
-    
+        switch(opcion) {
+            case 1:
+                crearVuelo(temp); 
+                insertarvuelo(temp);
+                cout << "Vuelo registrado exitosamente con ID: (Copiar este ID)" << temp.ID << endl;
+                break;
+            case 2:
+                cout << "Ingrese el ID del vuelo para autorizar: ";
+                cin >> idAux;
+                mandarapista(idAux);
+                break;
+            case 3:
+                if (pistaterrizaje.contadorPista > 0) {
+                    procesarvuelo(pistaterrizaje, "ATERRIZAJE");
+                } else if (pistadespegue.contadorPista > 0) {
+                    procesarvuelo(pistadespegue, "DESPEGUE");
+                } else {
+                    cout << "\n[!] No hay aviones esperando en pista." << endl;
+                }
+                break;
+            case 4:
+                mostrarpistas();
+                break;
+            case 5:
+              mostrarVuelos();
+              break;
+            case 6:
+              mostrarVuelosPorDia();
+              break;
+            case 0:
+                cout << "Cerrando sistemas de control..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Intente de nuevo." << endl;
+        }
+    } while(opcion != 0);
     return 0;
+
 }
