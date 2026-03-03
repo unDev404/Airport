@@ -1,8 +1,9 @@
 #include<iostream>
+#include<string>
 
 using namespace std;
 
-
+int contadorVuelos = 7;
 enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
 enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
 
@@ -19,13 +20,10 @@ struct vuelos
     proceso estado; //desarrollo del vuelo
     int horaProgramada; //Hora en la que debería estar en la pista del aeropuerto
     bool operación; //false = DESPEGUE, true = ATERRIZAJE
-    int día[7]; //Día en que el avión está en la pista, cola circular (de momento)
+    //int día[7]; //Día en que el avión está en la pista, cola circular (de momento)
 };
 
-void crearVuelo(vuelos Nuevo)
-{
 
-}
 
 void mostrarArray(string opciones[], int tam)
 {
@@ -34,6 +32,23 @@ for(int i = 0; i < tam; i++)
     cout<< i+1 << ". " << opciones[i]<< endl;
 }
 }
+
+
+string crearID(int num)
+{
+    string codeAir[5] = {"CV", "RT", "AV", "LS", "KY"};
+    string digits = to_string(contadorVuelos);
+    string cero = "";
+    for(int i = 0; i<(3 - digits.length()); i++)
+    {
+        cero = cero + "0"; 
+    }
+    
+    string code = codeAir[num] + cero + to_string(contadorVuelos);
+    contadorVuelos++;
+    return code;
+}
+
 
 int selecArray(int tam)
 {
@@ -50,6 +65,7 @@ int selecArray(int tam)
    
     return x-1;
 }
+
 
 int main()
 {
