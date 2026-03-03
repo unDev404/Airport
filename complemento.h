@@ -1,11 +1,12 @@
 #ifndef COMPLEMENTO_H
 #define COMPLEMENTO_H
 
-
-
 #include<string>
 #include<iostream>
 #include "vuelos.h"
+#include "arbol.h"
+#include "hash.h"
+
 
 
 extern int contadorVuelos;
@@ -19,10 +20,5 @@ std::string crearID(int num);
 
 int selecArray(int tam);
 
-void crearVuelo(vuelos &vueloNuevo);
-
-void mostrarVuelos();
-
-void mostrarVuelosPorDia();
-
+void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo);
 #endif

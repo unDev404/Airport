@@ -15,5 +15,5 @@ int funcionhash (string ID);
 
 vuelos* buscarvuelohash(string IDbuscar);
 
-void insertarvuelo(vuelos vueloNuevo);
+void insertarHash(vuelos vueloNuevo);
 #endif

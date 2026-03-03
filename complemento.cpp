@@ -47,7 +47,7 @@ int selecArray(int tam)
     return x-1;
 }
 
-void crearVuelo(vuelos vueloNuevo){
+void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo){
     cout<<"--Registro de vuelo--"<<endl;
     int op;
     do{
@@ -64,16 +64,16 @@ void crearVuelo(vuelos vueloNuevo){
 
     cout<<"Seleccione la aerolínea de vuelo: "<<endl;
     mostrarArray(aerolineas, 5);
-    int selection = selecArray(5);
-    vueloNuevo.aerolinea = aerolineas[selection];
-    vueloNuevo.ID = crearID(selection);
+    op = selecArray(5);
+    vueloNuevo.aerolinea = aerolineas[op];
+    vueloNuevo.ID = crearID(op);
 
     if(vueloNuevo.operacion)
     {
     cout<<"Seleccione la ciudad de origen: "<<endl;
     mostrarArray(ciudades, 4);
-    int seleccionorigen = selecArray(4);
-    vueloNuevo.origen = ciudades[seleccionorigen];
+    op = selecArray(4);
+    vueloNuevo.origen = ciudades[op];
 
     vueloNuevo.destino = ciudades[0];
     }else
@@ -82,10 +82,13 @@ void crearVuelo(vuelos vueloNuevo){
 
     cout<<"Seleccione la ciudad de destino: "<<endl;
     mostrarArray(ciudades, 4);
-    int selecciondestino = selecArray(4);
-    vueloNuevo.destino = ciudades[selecciondestino];
+    op = selecArray(4);
+    vueloNuevo.destino = ciudades[op];
     }
 
+    cout << "Prioridad (0:Emergencia, 1:VIP, 2:Comercial, 3:Reprogramado): ";
+    cin >> op;
+     vueloNuevo.prioridad = (clase)op;
 
     vueloNuevo.estado = PROGRAMADO;
     
@@ -97,88 +100,7 @@ void crearVuelo(vuelos vueloNuevo){
         cout<<"Opcion invalida"<<endl;
     } while (!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24));
 
-    cout<<"\nSeleccione la prioridad del vuelo: "<<endl;
-    cout<<"0. EMERGENCIA | 1. VIP | 2. COMERCIAL | 3. REPROGRAMADO | 4. CANCELADO"<<endl;
-    int prioridad;
-    do{
-        cout<<"Ingrese su eleccion: ";
-        cin>>prioridad;
-    }while(prioridad < 0 || prioridad > 4);
-    vueloNuevo.prioridad = (clase)(prioridad);
-
-
-    cout << "\nSeleccione el dia de la semana que va a volar. " << endl;
-    mostrarArray(diasSemana, 7);
-    int diaSeleccionado = selecArray(7);
-    vueloNuevo.dia = (dias)diaSeleccionado;
+    insertarEnArBin(raiz, vueloNuevo);
+    insertarHash(vueloNuevo);
     
-
-}
-
-void mostrarVuelos(){
-
-    cout<< "\n========== HISTORIAL DE VUELOS EN GENERAL =========="<<endl; 
-
-    bool hayVuelos = false;
-
-    for (int i = 0; i < tamanoHash; i++) {
-        nodohash* temp = tablaHash[i];
-        while (temp != NULL) {
-            hayVuelos = true;   
-            
-            cout << "-----------------------------" << endl;
-            cout << "ID: " << temp->dato.ID << ", Aerolínea: " << temp->dato.aerolinea 
-                 << ", Origen: " << temp->dato.origen << ", Destino: " << temp->dato.destino 
-                 << ", Prioridad: " << clases[temp->dato.prioridad] << ", Estado: " << procesoactual[temp->dato.estado] 
-                 << ", Hora Programada: " << temp->dato.horaProgramada << ":00" 
-                 << ", Operación: " << (temp->dato.operacion ? "Aterrizaje" : "Despegue")
-                 << ", Dia: " << diasSemana[temp->dato.dia] << "\n"
-                 << endl;
-            temp = temp->siguiente;
-        }
-    }
-     if (hayVuelos == false){
-            cout << "No hay vuelos registrados." <<endl;
-        }
-}
-
-void mostrarVuelosPorDia() {
-    cout << "\n========== HISTORIAL DE VUELOS POR DIA ==========" << endl;
-    
-   
-    for (int i = 0; i < 7; i++) {
-        cout << "\n--- VUELOS DEL " << diasSemana[i] << " ---" << endl;
-        bool diaTieneVuelos = false; //<--- para saber si hay vuelos o nei.
-
-        for (int j = 0; j <= 23; j++) {                 //<---- esto es para ordenar por horas. 
-
-        // Recorremos la tabla buscando vuelos que coincidan con el dia actual 'j'
-        for (int k = 0; k < tamanoHash; k++) {
-            nodohash* temp = tablaHash[k];
-
-            while (temp != NULL) {
-                if (temp->dato.dia == i && temp->dato.horaProgramada == j) { // Si el dia del vuelo coincide con 'i' y la hora es 'j'
-                    diaTieneVuelos = true;
-                    cout << "Hora: " << temp->dato.horaProgramada << ":00"  
-                         << " \n| ID: " << temp->dato.ID 
-                         << " \n| Aerolinea: " << temp->dato.aerolinea 
-                         << " \n| Origen: " << temp->dato.origen 
-                         << " \n| Destino: " << temp->dato.destino 
-                         << " \n| Prioridad: " << clases[temp->dato.prioridad] 
-                         << " \n| Estado: " << procesoactual[temp->dato.estado] 
-                         << " \n| Operacion: " << (temp->dato.operacion ? "Aterrizaje" : "Despegue")
-                         << " \n| Dia: " << diasSemana[temp->dato.dia] << "\n"
-                         << endl;
-                }
-                temp = temp->siguiente;
-            }
-        }
-    }
-
-        // Si terminó de buscar en toda la tabla hash y no encontró vuelos para este dia, que imprima:
-        if (!diaTieneVuelos) {
-            cout << "  No hay vuelos programados para este dia." << endl; 
-        }
-    }
-    cout << "=================================================" << endl;
 }
