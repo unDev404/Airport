@@ -23,6 +23,8 @@ int main()
         cout << "2. Autorizar Pista (Mover a la fila)" << endl;
         cout << "3. Atender Siguiente (Despegar/Aterrizar)" << endl;
         cout << "4. Ver Radar de Pistas (Estado actual)" << endl;
+        cout << "5. Mostrar Vuelos en Sistema" << endl;
+        cout << "6. Mostrar Vuelos por Dia" << endl;
         cout << "0. Salir del programa" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -50,6 +52,12 @@ int main()
             case 4:
                 mostrarpistas();
                 break;
+            case 5:
+              mostrarVuelos();
+              break;
+            case 6:
+              mostrarVuelosPorDia();
+              break;
             case 0:
                 cout << "Cerrando sistemas de control..." << endl;
                 break;
@@ -58,4 +66,5 @@ int main()
         }
     } while(opcion != 0);
     return 0;
+
 }
