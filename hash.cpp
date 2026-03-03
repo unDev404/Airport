@@ -1,7 +1,8 @@
 #include "hash.h"
-#include <string>
-#include<iostream>
+
 using namespace std;
+
+nodohash* tablaHash[100]={NULL};
 
 int funcionhash (string ID)
 {
@@ -20,9 +21,9 @@ vuelos* buscarvuelohash(string IDbuscar)
     while (temp != NULL) {
         if (temp->dato.ID == IDbuscar) {
             return &(temp->dato); // Devuelve un puntero al vuelo encontrado
-        temp = temp->siguiente;
-
         }
+        
+        temp = temp->siguiente;
     }
     return NULL; // No se encontró el vuelo
 }

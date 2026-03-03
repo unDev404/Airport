@@ -1,7 +1,9 @@
 #include "cola.h"
-#include <ctime>
 
 using namespace std;
+
+ColaPista pistaterrizaje;
+ColaPista pistadespegue;
 
 // Funciones de las colas
 
@@ -42,53 +44,26 @@ void mandarapista( string IDbuscar){
 	}
 
 void procesarvuelo(ColaPista &cola, string tipopista) {
-    if (cola.contadorPista == 0) {
-        cout << "No hay vuelos en la pista de " << tipopista << "." << endl;
-        return;
-    }
-    
-    // Aqui tomara el vuelo que este primero en la cola circular
-    vuelos vueloProcesado = cola.aviones[cola.frente];
-    
-    int tiempoManiobra = (vueloProcesado.operacion) ? 10 : 5; 
-    
-    cout << "\n===============================================" << endl;
-    cout << "   TORRE DE CONTROL: AUTORIZANDO " << tipopista << endl;
-    cout << "   Vuelo: " << vueloProcesado.ID << " | Aerolinea: " << vueloProcesado.aerolinea << endl;
-    cout << "===============================================" << endl;
-    cout << "PISTA OCUPADA - INICIANDO OPERACION..." << endl;
-
-    time_t inicio = time(0); 
-    int segundosTranscurridos = 0;
-
-    while (segundosTranscurridos < tiempoManiobra) {
-        time_t ahora = time(0);
-        if (ahora - inicio > segundosTranscurridos) {
-            segundosTranscurridos++;
-            cout << "  > Maniobrando... [" << segundosTranscurridos << "s / " << tiempoManiobra << "s]" << endl;
+        if (cola.contadorPista == 0) {
+            cout << "No hay vuelos en la pista de " << tipopista << "." << endl;
+            return;
         }
+        vuelos vueloProcesado = cola.aviones[cola.frente];
+       vuelos* vueloenhash= buscarvuelohash(vueloProcesado.ID);
+
+        if(vueloenhash!=NULL){
+		 vueloenhash->estado = FINALIZADO;
+	 }
+        cola.frente = (cola.frente + 1) % maxPista;
+        cola.contadorPista--;
+
+        cout<<"Torre de control: Vuelo "<<vueloProcesado.ID<<" ha finalizado su "<<tipopista<<"."<<endl;
     }
-
-    vuelos* vueloenhash= buscarvuelohash(vueloProcesado.ID);
-
-    if(vueloenhash!=NULL){
-        vueloenhash->estado = FINALIZADO;
-    }
-    
-    cola.frente = (cola.frente + 1) % maxPista;
-    cola.contadorPista--;
-
-    cout << "\nTorre de control: Vuelo " << vueloProcesado.ID << " ha finalizado su " << tipopista << "." << endl;
-    cout << "PISTA DESPEJADA." << endl;
-    cout << "===============================================" << endl;
-}
     
 void  mostrarpistas() {
         cout<<"----------------------------------------"<<endl;
         cout << "\nEstado de operaciones de las pistas: " << endl;
         cout<<"-----------------------------------------"<<endl;
-
-	//PISTA ATERRIZAJE
         cout << "Pista de aterrizaje: [" << pistaterrizaje.contadorPista << " aviones]:" << endl;
         if(pistaterrizaje.contadorPista == 0)
         cout<<"[Pista de aterrizaje vacia]"<<endl;
@@ -112,5 +87,4 @@ void  mostrarpistas() {
         }
     }
     cout<<"----------------------------------------"<<endl;
-}
-    
+    }

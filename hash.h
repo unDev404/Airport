@@ -1,13 +1,15 @@
-#ifndef HASH.H
-#define HASH.H
+#ifndef HASH_H
+#define HASH_H
 #include "vuelos.h"
+#include <string>
+#include<iostream>
 
 struct nodohash {
     vuelos dato;
     nodohash* siguiente;
 };
 const int tamanoHash = 100;
-nodohash* tablaHash[100]={NULL};
+extern nodohash* tablaHash[100];
 
 int funcionhash (string ID);
 

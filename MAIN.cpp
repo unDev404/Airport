@@ -4,19 +4,58 @@
 #include "hash.h"
 #include "vuelos.h"
 #include "complemento.h"
+#include "cola.h"
 
 using namespace std;
   
 
 int main()
 {
+ int opcion;
+    string idAux;
+    vuelos temp; 
 
-    vuelos vueloNuevo;
-    crearVuelo(vueloNuevo);
-    insertarvuelo(vueloNuevo);
+    do {
+        cout << "\n======================================" << endl;
+        cout << "   SISTEMA DE CONTROL DE AEROPUERTO" << endl;
+        cout << "======================================" << endl;
+        cout << "1. Registrar Vuelo (Entrada al sistema)" << endl;
+        cout << "2. Autorizar Pista (Mover a la fila)" << endl;
+        cout << "3. Atender Siguiente (Despegar/Aterrizar)" << endl;
+        cout << "4. Ver Radar de Pistas (Estado actual)" << endl;
+        cout << "0. Salir del programa" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
 
-
-    
-    
+        switch(opcion) {
+            case 1:
+                crearVuelo(temp); 
+                insertarvuelo(temp);
+                cout << "Vuelo registrado exitosamente con ID: (Copiar este ID)" << temp.ID << endl;
+                break;
+            case 2:
+                cout << "Ingrese el ID del vuelo para autorizar: ";
+                cin >> idAux;
+                mandarapista(idAux);
+                break;
+            case 3:
+                if (pistaterrizaje.contadorPista > 0) {
+                    procesarvuelo(pistaterrizaje, "ATERRIZAJE");
+                } else if (pistadespegue.contadorPista > 0) {
+                    procesarvuelo(pistadespegue, "DESPEGUE");
+                } else {
+                    cout << "\n[!] No hay aviones esperando en pista." << endl;
+                }
+                break;
+            case 4:
+                mostrarpistas();
+                break;
+            case 0:
+                cout << "Cerrando sistemas de control..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Intente de nuevo." << endl;
+        }
+    } while(opcion != 0);
     return 0;
 }

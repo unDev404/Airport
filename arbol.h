@@ -1,5 +1,5 @@
-#ifndef ARBOL.H
-#define ARBOL.H
+#ifndef ARBOL_H
+#define ARBOL_H
 
 #include "vuelos.h"
 
