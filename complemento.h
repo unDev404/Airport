@@ -19,5 +19,10 @@ std::string crearID(int num);
 
 int selecArray(int tam);
 
-void crearVuelo(vuelos vueloNuevo);
+void crearVuelo(vuelos &vueloNuevo);
+
+void mostrarVuelos();
+
+void mostrarVuelosPorDia();
+
 #endif
