@@ -3,11 +3,11 @@
 
 using namespace std;
 
-int contadorVuelos = 7;
+int contadorVuelos = 0;
 enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
 enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
 
-    string aerolíneas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
+    string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
     string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
 
 struct vuelos
@@ -19,7 +19,7 @@ struct vuelos
     clase prioridad; //preferencia jerarquica del vuelo 
     proceso estado; //desarrollo del vuelo
     int horaProgramada; //Hora en la que debería estar en la pista del aeropuerto
-    bool operación; //false = DESPEGUE, true = ATERRIZAJE
+    bool operacion; //false = DESPEGUE, true = ATERRIZAJE
     //int día[7]; //Día en que el avión está en la pista, cola circular (de momento)
 };
 
@@ -39,7 +39,8 @@ string crearID(int num)
     string codeAir[5] = {"CV", "RT", "AV", "LS", "KY"};
     string digits = to_string(contadorVuelos);
     string cero = "";
-    for(int i = 0; i<(3 - digits.length()); i++)
+    int x = (3 - digits.length());
+    for(int i = 0; i<x; i++)
     {
         cero = cero + "0"; 
     }
@@ -49,6 +50,53 @@ string crearID(int num)
     return code;
 }
 
+struct nodohash {
+    vuelos dato;
+    nodohash* siguiente;
+};
+
+//Definiciones globales para la tabla hash
+ const int tamanoHash = 100;
+nodohash* tablaHash[100]={NULL};
+
+// Tabla Hash
+
+int funcionhash (string ID)
+{
+    int suma = 0;
+    int x = ID.length();
+    for (int i = 0; i < x; i++) {
+        suma += (int)ID[i]; // Suma el valor ASCII de cada carácter
+    }
+    return suma % tamanoHash; // Devuelve el índice en la tabla hash
+}
+
+vuelos* buscarvuelohash(string IDbuscar)
+{
+    int indice = funcionhash(IDbuscar);
+    nodohash* temp = tablaHash[indice];
+    while (temp != NULL) {
+        if (temp->dato.ID == IDbuscar) {
+            return &(temp->dato); // Devuelve un puntero al vuelo encontrado
+        temp = temp->siguiente;
+
+        }
+    }
+    return NULL; // No se encontró el vuelo
+}
+
+void insertarvuelo(vuelos vueloNuevo){
+    if(buscarvuelohash(vueloNuevo.ID) != NULL) {
+        cout << "Error: Ya existe un vuelo con ese ID." << endl;
+        return;
+    }
+    int indice = funcionhash(vueloNuevo.ID);
+    nodohash* nuevoNodo = new nodohash();
+    nuevoNodo->dato = vueloNuevo;
+    nuevoNodo->siguiente = tablaHash[indice];
+    tablaHash[indice] = nuevoNodo; // Inserta el nuevo nodo al inicio de la lista en ese índice
+    cout<<"registro en posicion:"<<indice<<endl;
+}
 
 int selecArray(int tam)
 {
@@ -66,11 +114,66 @@ int selecArray(int tam)
     return x-1;
 }
 
+void crearVuelo(vuelos vueloNuevo){
+    cout<<"--Registro de vuelo--"<<endl;
+    int op;
+    do{
+    cout<<"Tipo de operación: "<<endl;
+    cout<<"0. DESPEGUE\t1. ATERRIZAJE"<<endl;
+    cout<<"Seleccione:";
+    cin>>op;
+
+    if(op!=0 && op!=1)
+        cout<<"Opcion invalida"<<endl;
+    } while(op!=0 && op!=1);
+
+    vueloNuevo.operacion = (op == 1); // true para aterrizaje, false para despegue
+
+    cout<<"Seleccione la aerolínea de vuelo: "<<endl;
+    mostrarArray(aerolineas, 5);
+    int selection = selecArray(5);
+    vueloNuevo.aerolinea = aerolineas[selection];
+    vueloNuevo.ID = crearID(selection);
+
+    if(vueloNuevo.operacion)
+    {
+    cout<<"Seleccione la ciudad de origen: "<<endl;
+    mostrarArray(ciudades, 4);
+    int seleccionorigen = selecArray(4);
+    vueloNuevo.origen = ciudades[seleccionorigen];
+
+    vueloNuevo.destino = ciudades[0];
+    }else
+    {   
+    vueloNuevo.origen = ciudades[0];
+
+    cout<<"Seleccione la ciudad de destino: "<<endl;
+    mostrarArray(ciudades, 4);
+    int selecciondestino = selecArray(4);
+    vueloNuevo.destino = ciudades[selecciondestino];
+    }
+
+
+    vueloNuevo.estado = PROGRAMADO;
+    
+    do
+    {
+        cout<<"Ingrese la hora programada (en formato 24 horas, ej: 14 para 2pm): ";
+        cin>>vueloNuevo.horaProgramada;
+        if(!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24))
+        cout<<"Opcion invalida"<<endl;
+    } while (!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24));
+    
+}
+
 
 int main()
 {
 
-   
+    vuelos vueloNuevo;
+    crearVuelo(vueloNuevo);
+    insertarvuelo(vueloNuevo);
+
 
     
     
