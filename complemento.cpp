@@ -3,10 +3,6 @@
 
 using namespace std;
 
-enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
-enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
-enum dias {LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO}; // 0 (Lunes) a 6 (Domingo)
-
 int contadorVuelos = 0;
 string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
 string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //ciudades disponibles disponibles en el aeropuerto
@@ -114,3 +110,4 @@ void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo){
     
 
 }
+
