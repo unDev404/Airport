@@ -21,4 +21,8 @@ std::string crearID(int num);
 int selecArray(int tam);
 
 void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo);
+
+//Anuncua la funcuón que Imprimirá los vuelos finalizados
+void mostrarHistorial();
+
 #endif
