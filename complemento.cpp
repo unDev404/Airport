@@ -7,6 +7,13 @@ using namespace std;
 int contadorVuelos = 0;
 string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
 string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
+
+
+//Traductor del enum a text
+string clases[5] = {"EMERGENCIA", "VIP", "COMERCIAL", "REPROGRAMADO", "CANCELADO"};
+string procesoactual[3] = {"PROGRAMADO", "EN_PISTA", "FINALIZADO"};
+string diasSemana[7] = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"}; //días de la semana para el historial
+
 void mostrarArray(string opciones[], int tam)
 {
 for(int i = 0; i < tam; i++)
@@ -182,3 +189,4 @@ void mostrarVuelosPorDia() {
     }
     cout << "=================================================" << endl;
 }
+
