@@ -25,6 +25,7 @@ int main()
         cout << "2. Autorizar Pista (Mover a la fila)" << endl;
         cout << "3. Atender Siguiente (Despegar/Aterrizar)" << endl;
         cout << "4. Ver Radar de Pistas (Estado actual)" << endl;
+        cout << "5. Ver Historial de Vuelos Finalizados" << endl; //Historial
         cout << "0. Salir del programa" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -52,6 +53,9 @@ int main()
             case 4:
                 mostrarpistas();
                 break;
+            case 5:
+                mostrarHistorial(); //Historiañ
+                break;
             case 0:
                 cout << "Cerrando sistemas de control..." << endl;
                 break;
@@ -62,3 +66,4 @@ int main()
     return 0;
 
 }
+
