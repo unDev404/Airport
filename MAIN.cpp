@@ -8,6 +8,8 @@
 
 using namespace std;
   
+// Al comenzar el programa, nos aseguramos de que el historial esté vacío.
+historial = nullptr;
 
 int main()
 {
@@ -58,4 +60,5 @@ int main()
         }
     } while(opcion != 0);
     return 0;
+
 }
