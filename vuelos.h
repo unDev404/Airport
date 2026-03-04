@@ -6,6 +6,8 @@ using namespace std;
 
 enum clase {EMERGENCIA, VIP, COMERCIAL, REPROGRAMADO, CANCELADO};
 enum proceso {PROGRAMADO, EN_PISTA, FINALIZADO};
+enum dias {LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO}; 
+
 struct vuelos
 {
     string aerolinea; //nombre de la empresa a la que pertenece el avión ARRAY STRING
@@ -16,6 +18,7 @@ struct vuelos
     proceso estado; //desarrollo del vuelo
     int horaProgramada; //Hora en la que debería estar en la pista del aeropuerto
     bool operacion; //false = DESPEGUE, true = ATERRIZAJE
-    //int día[7]; //Día en que el avión está en la pista, cola circular (de momento)
+    dias dia; //Día en que el avión está en la pista.
 };
+
 #endif
