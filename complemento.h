@@ -6,6 +6,7 @@
 #include "vuelos.h"
 #include "arbol.h"
 #include "hash.h"
+#include "cola.h"
 
 
 
@@ -28,4 +29,9 @@ void crearVuelo(nodoArBin*& raiz, vuelos &vueloNuevo);
 void mostrarVuelos();
 
 void mostrarVuelosPorDia();
+
+void simularTorre(nodoArBin*& raiz);
+void reproducir();
+void pausaparasegundo();
+
 #endif

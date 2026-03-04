@@ -1,6 +1,6 @@
 #ifndef VUELO_H
 #define VUELO_H
-//SIN CAMBIOS
+//g++ -o programa.exe MAIN.cpp arbol.cpp cola.cpp complemento.cpp hash.cpp
 #include <string>
 using namespace std;
 

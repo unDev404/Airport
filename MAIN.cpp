@@ -39,9 +39,18 @@ int main()
                 cout << "Vuelo registrado exitosamente con ID: (Copiar este ID)" << temp.ID << endl;
                 break;
             case 2:
-                cout << "Ingrese el ID del vuelo para autorizar: ";
-                cin >> idAux;
-                mandarapista(idAux);
+                if (raiz == nullptr) {
+                    cout << "\n[!] No hay vuelos registrados en el sistema para autorizar." << endl;
+                } else {
+                    // Extraemos automáticamente el vuelo con mayor prioridad del árbol
+                    vuelos vueloPrioritario = extraerMasPrioritario(raiz); 
+                    
+                    cout << "\n[Torre de Control] Autorizando automáticamente vuelo con mayor prioridad..." << endl;
+                    cout << "ID: " << vueloPrioritario.ID << " | Aerolinea: " << vueloPrioritario.aerolinea << endl;
+
+                    // Lo mandamos a la pista usando su ID
+                    mandarapista(vueloPrioritario.ID); 
+                }
                 break;
             case 3:
                 if (pistaterrizaje.contadorPista > 0) {

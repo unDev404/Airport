@@ -115,6 +115,8 @@ void crearVuelo(nodoArBin*& raiz, vuelos &vueloNuevo){
     
 }
 
+
+
  
     
 
@@ -186,4 +188,27 @@ void mostrarVuelosPorDia() {
         }
     }
     cout << "=================================================" << endl;
+}
+
+void pausaparasegundo(){
+    clock_t pausa= clock() + CLOCKS_PER_SEC;
+    while (clock() < pausa) {
+}
+}
+
+void reproducir(){
+    int tamanobarra=10;
+
+    
+    // reproduccion regresiva
+    for(int t= 5; t>=0; --t){
+        int completo = ((5 - t) * tamanobarra) / 5;
+        string barrallena(completo, '-');
+        string barraVacia(tamanobarra - completo, ' ');
+        cout << "\rTiempo en la pista:" << t << "s [" << barrallena << ">" << barraVacia << "]" << flush;
+        if (t > 0) {
+            pausaparasegundo();
+        }
+    }
+    cout << endl << "operación finalizada.\n" << endl;
 }
