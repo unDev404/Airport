@@ -21,4 +21,15 @@ struct vuelos
     dias dia; //Día en que el avión está en la pista.
 };
 
+struct nodohash {
+    vuelos dato;           // El avión que guardamos
+    nodohash* siguiente;   // El puntero que conecta al siguiente avión
+};
+
+//Avisamos que existirá una lista global llamada historial
+//extern permite que main.cpp y cola.cpp la reconozcan.
+extern nodohash* historial;
+
+
 #endif
+
