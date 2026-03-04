@@ -1,5 +1,5 @@
 #include "arbol.h"
-
+//SIN CAMBIO
 bool mayorPrioridad(vuelos a, vuelos b) 
 {
     if (a.horaProgramada < b.horaProgramada) return true;

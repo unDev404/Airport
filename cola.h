@@ -3,7 +3,7 @@
 #include "vuelos.h"
 #include <iostream>
 #include "hash.h"
-
+//SIN CAMBIOS
 const int maxPista = 10; // Capacidad máxima de cada pista
 struct ColaPista {
  vuelos aviones[maxPista];
@@ -28,5 +28,4 @@ void mandarapista(string IDbuscar);
 void procesarvuelo(ColaPista &cola, string tipopista);
 
 void  mostrarpistas();
-
 #endif

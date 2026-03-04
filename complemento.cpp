@@ -7,8 +7,6 @@ using namespace std;
 int contadorVuelos = 0;
 string aerolineas[5] = {"Conviasa", "Rutaca", "Avior", "LASER", "KAYAK"}; //aerolíneas disponibles en el aeropuerto
 string ciudades[4] = {"Puerto Ordaz", "Maturin", "Barquisimeto", "Caracas"}; //aerolíneas disponibles en el aeropuerto
-
-
 //Traductor del enum a text
 string clases[5] = {"EMERGENCIA", "VIP", "COMERCIAL", "REPROGRAMADO", "CANCELADO"};
 string procesoactual[3] = {"PROGRAMADO", "EN_PISTA", "FINALIZADO"};
@@ -46,7 +44,7 @@ int selecArray(int tam)
     {
         cout << "\nIngresa tu eleccion: ";
         cin >> x;
-        if(x>0 && x<tam) verify = false;
+        if(x>0 && x<=tam) verify = false;
         else cout << "\nOpcion Invalida, Intente nuevamente" << endl;
 
     }while(verify);
@@ -54,7 +52,7 @@ int selecArray(int tam)
     return x-1;
 }
 
-void crearVuelo(vuelos vueloNuevo){
+void crearVuelo(nodoArBin*& raiz, vuelos &vueloNuevo){
     cout<<"--Registro de vuelo--"<<endl;
     int op;
     do{
@@ -71,16 +69,16 @@ void crearVuelo(vuelos vueloNuevo){
 
     cout<<"Seleccione la aerolínea de vuelo: "<<endl;
     mostrarArray(aerolineas, 5);
-    int selection = selecArray(5);
-    vueloNuevo.aerolinea = aerolineas[selection];
-    vueloNuevo.ID = crearID(selection);
+    op = selecArray(5);
+    vueloNuevo.aerolinea = aerolineas[op];
+    vueloNuevo.ID = crearID(op);
 
     if(vueloNuevo.operacion)
     {
     cout<<"Seleccione la ciudad de origen: "<<endl;
     mostrarArray(ciudades, 4);
-    int seleccionorigen = selecArray(4);
-    vueloNuevo.origen = ciudades[seleccionorigen];
+    op = selecArray(4);
+    vueloNuevo.origen = ciudades[op];
 
     vueloNuevo.destino = ciudades[0];
     }else
@@ -89,10 +87,13 @@ void crearVuelo(vuelos vueloNuevo){
 
     cout<<"Seleccione la ciudad de destino: "<<endl;
     mostrarArray(ciudades, 4);
-    int selecciondestino = selecArray(4);
-    vueloNuevo.destino = ciudades[selecciondestino];
+    op = selecArray(4);
+    vueloNuevo.destino = ciudades[op];
     }
 
+    cout << "Prioridad (0:Emergencia, 1:VIP, 2:Comercial, 3:Reprogramado): ";
+    cin >> op;
+     vueloNuevo.prioridad = (clase)op;
 
     vueloNuevo.estado = PROGRAMADO;
     
@@ -104,23 +105,20 @@ void crearVuelo(vuelos vueloNuevo){
         cout<<"Opcion invalida"<<endl;
     } while (!(vueloNuevo.horaProgramada>=0 && vueloNuevo.horaProgramada<24));
 
-    cout<<"\nSeleccione la prioridad del vuelo: "<<endl;
-    cout<<"0. EMERGENCIA | 1. VIP | 2. COMERCIAL | 3. REPROGRAMADO | 4. CANCELADO"<<endl;
-    int prioridad;
-    do{
-        cout<<"Ingrese su eleccion: ";
-        cin>>prioridad;
-    }while(prioridad < 0 || prioridad > 4);
-    vueloNuevo.prioridad = (clase)(prioridad);
-
-
     cout << "\nSeleccione el dia de la semana que va a volar. " << endl;
     mostrarArray(diasSemana, 7);
     int diaSeleccionado = selecArray(7);
     vueloNuevo.dia = (dias)diaSeleccionado;
+
+    insertarEnArBin(raiz, vueloNuevo);
+    insertarHash(vueloNuevo);
+    
+}
+
+ 
     
 
-}
+
 
 void mostrarVuelos(){
 
@@ -189,4 +187,3 @@ void mostrarVuelosPorDia() {
     }
     cout << "=================================================" << endl;
 }
-

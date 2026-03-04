@@ -1,5 +1,5 @@
 #include "hash.h"
-
+//SIN CAMBIOS
 using namespace std;
 
 nodohash* tablaHash[100]={NULL};
@@ -28,7 +28,7 @@ vuelos* buscarvuelohash(string IDbuscar)
     return NULL; // No se encontró el vuelo
 }
 
-void insertarvuelo(vuelos vueloNuevo){
+void insertarHash(vuelos vueloNuevo){
     if(buscarvuelohash(vueloNuevo.ID) != NULL) {
         cout << "Error: Ya existe un vuelo con ese ID." << endl;
         return;

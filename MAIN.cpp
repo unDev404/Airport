@@ -13,7 +13,9 @@ int main()
 {
  int opcion;
     string idAux;
-    vuelos temp; 
+    vuelos temp;
+    nodoArBin* raiz = {NULL};
+
 
     do {
         cout << "\n======================================" << endl;
@@ -31,8 +33,9 @@ int main()
 
         switch(opcion) {
             case 1:
-                crearVuelo(temp); 
-                insertarvuelo(temp);
+                crearVuelo(raiz, temp); 
+                
+                
                 cout << "Vuelo registrado exitosamente con ID: (Copiar este ID)" << temp.ID << endl;
                 break;
             case 2:
@@ -52,7 +55,7 @@ int main()
             case 4:
                 mostrarpistas();
                 break;
-            case 5:
+                case 5:
               mostrarVuelos();
               break;
             case 6:
@@ -66,5 +69,4 @@ int main()
         }
     } while(opcion != 0);
     return 0;
-
 }

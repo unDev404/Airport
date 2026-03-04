@@ -3,7 +3,7 @@
 #include "vuelos.h"
 #include <string>
 #include<iostream>
-
+//SIN CAMBIOS
 struct nodohash {
     vuelos dato;
     nodohash* siguiente;
@@ -15,5 +15,5 @@ int funcionhash (string ID);
 
 vuelos* buscarvuelohash(string IDbuscar);
 
-void insertarvuelo(vuelos vueloNuevo);
+void insertarHash(vuelos vueloNuevo);
 #endif
