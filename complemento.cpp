@@ -111,3 +111,29 @@ void crearVuelo(nodoArBin*& raiz, vuelos vueloNuevo){
 
 }
 
+// Función para recorrer y mostrar la lista de vuelos terminados
+void mostrarHistorial() {
+    cout << "\n========================================" << endl;
+    cout << "   HISTORIAL DE VUELOS FINALIZADOS" << endl;
+    cout << "========================================" << endl;
+
+    // Empezamos desde el inicio de la lista global 'historial'
+    nodohash* temporal = historial;
+
+    if (temporal == NULL) {
+        cout << "[!] El historial esta vacio actualmente." << endl;
+        return;
+    }
+
+    // Mientras el nodo actual no sea nulo, imprimimos los datos
+    while (temporal != NULL) {
+        cout << "ID: " << temporal->dato.ID 
+             << " | Aerolinea: " << temporal->dato.aerolinea 
+             << " | Operacion: " << (temporal->dato.operacion ? "ATERRIZAJE" : "DESPEGUE")
+             << " | Estado: FINALIZADO" << endl;
+        
+        // Pasamos al siguiente avión en la lista
+        temporal = temporal->siguiente;
+    }
+    cout << "========================================\n" << endl;
+}
