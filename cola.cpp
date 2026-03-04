@@ -54,6 +54,16 @@ void procesarvuelo(ColaPista &cola, string tipopista) {
         if(vueloenhash!=NULL){
 		 vueloenhash->estado = FINALIZADO;
 	 }
+
+		//Nodo para el historial
+    	nodohash* nuevoNodoHistorial = new nodohash();
+		nuevoNodoHistorial->dato = vueloProcesado;
+    	nuevoNodoHistorial->dato.estado = FINALIZADO; // Nos aseguramos que el estado sea final
+
+		//Conectar al inicio de la lista 'historial'
+    	nuevoNodoHistorial->siguiente = historial;
+    	historial = nuevoNodoHistorial;
+	
         cola.frente = (cola.frente + 1) % maxPista;
         cola.contadorPista--;
 
@@ -87,4 +97,5 @@ void  mostrarpistas() {
         }
     }
     cout<<"----------------------------------------"<<endl;
+
     }
